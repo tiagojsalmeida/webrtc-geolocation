@@ -11,7 +11,7 @@
 
 angular
   .module('publicApp', [
-    'ngRoute'
+    'ngRoute','classy','uiGmapgoogle-maps'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -26,7 +26,14 @@ angular
       .otherwise({
         redirectTo: '/room'
       });
+  }).config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    china: true,
+    key: 'AIzaSyBVIdFfW8q4AfMFtwu-BQM9ukQopHnpe9c',
+    // v: '3.17',
+    libraries: 'weather,geometry,visualization'
   });
+});
 
 angular.module('publicApp')
   .constant('config', {
@@ -35,5 +42,5 @@ angular.module('publicApp')
 
 Object.setPrototypeOf = Object.setPrototypeOf || function(obj, proto) {
   obj.prototype = proto;
-  return obj; 
+  return obj;
 };

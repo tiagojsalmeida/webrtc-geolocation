@@ -43,9 +43,9 @@ angular.module('publicApp')
 
       };
         var sendChannel = pc.createDataChannel("sendDataChannel", {reliable: false});
-        setTimeout(function(){
+        sendChannel.onopen = function (event) {
             sendChannel.send(JSON.stringify(stream));
-        }, 1000);
+        };
 
 //        pc.ondatachannel = function(event) {
 //            receiveChannel = event.channel;

@@ -6,13 +6,19 @@
   <span ng-bind="error"></span>
 </div>
 
-<div class="video-wrapper">
-    <div ng-repeat="peer in peers">{{peer.location.latitude}}, {{peer.location.longitude}}</div>
-    <!--<video-player class="col-md-4" ng-repeat="peer in peers" vid-src="{{peer.stream}}"></video-player>-->
-</div>
+<!--<div class="video-wrapper">-->
+    <!--<div ng-repeat="peer in peers">{{peer.location.latitude}}, {{peer.location.longitude}}</div>-->
+    <!--&lt;!&ndash;<video-player class="col-md-4" ng-repeat="peer in peers" vid-src="{{peer.stream}}"></video-player>&ndash;&gt;-->
+<!--</div>-->
 
-<div class="video-wrapper">
-  <div class="col-md-2">
-      <div>My coords: {{getLocation().latitude}}, {{getLocation().longitude}}</div>
-  </div>
-</div>
+<!--<div class="video-wrapper">-->
+  <!--<div class="col-md-2">-->
+      <!--<div>My coords: {{getLocation().latitude}}, {{getLocation().longitude}}</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+
+<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+  <ui-gmap-markers models="peers" coords="'self'" icon="'icon'">
+  </ui-gmap-markers>
+</ui-gmap-google-map>
