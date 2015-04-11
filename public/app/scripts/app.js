@@ -34,6 +34,6 @@ angular.module('publicApp')
   });
 
 Object.setPrototypeOf = Object.setPrototypeOf || function(obj, proto) {
-  obj.__proto__ = proto;
+  obj.prototype = proto;
   return obj; 
 };

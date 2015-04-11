@@ -12,5 +12,5 @@ angular.module('publicApp')
     if (typeof io === 'undefined') {
       throw new Error('Socket.io required');
     }
-    return io;
+    return window.io;
   });
