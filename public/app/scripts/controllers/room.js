@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room, geolocation) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
@@ -48,7 +48,43 @@ angular.module('publicApp')
       });
     });
 
+
+    $scope.locations = [];
+
+    $scope.map = {
+      center: {
+        longitude:40,
+        latitude:0
+      },
+      zoom: 4,
+      bounds: {}
+    };
+
+    $scope.options = {
+      scollWheel:false
+    };
+
     $scope.getLocalVideo = function () {
       return $sce.trustAsResourceUrl(stream);
     };
+
+    $scope.getCurrentLocation = function(){
+      geolocation.getCurrentLocation(function(err,location){
+        if(err){
+          return console.log('error getting position'+err);
+        }
+        $scope.locations[0] = location;
+        $scope.myLocation = location.latitude+' '+location.longitude;
+      });
+    };
+
+    geolocation.watchCurrentLocation(function(err,location){
+      if(err){
+        return console.log('error getting position'+err);
+      }
+      $scope.locations[0] = location;
+      $scope.myLocation = location.latitude+' '+location.longitude;
+    });
+
+
   });

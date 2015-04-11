@@ -16,3 +16,15 @@
   </div>
 </div>
 
+
+<div style="color:black;">
+<input disabled ng-model="myLocation">
+<button ng-click="getCurrentLocation()">[dev]get your current location</button>
+</div>
+
+
+
+<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+  <ui-gmap-markers models="locations" coords="'self'" icon="'icon'">
+  </ui-gmap-markers>
+</ui-gmap-google-map>
