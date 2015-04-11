@@ -22,20 +22,44 @@ angular.module('publicApp')
       }
       var pc = new RTCPeerConnection(iceConfig);
       peerConnections[id] = pc;
-      pc.addStream(stream);
+//      pc.addStream(stream);
       pc.onicecandidate = function (evnt) {
         socket.emit('msg', { by: currentId, to: id, ice: evnt.candidate, type: 'ice' });
       };
-      pc.onaddstream = function (evnt) {
-        console.log('Received new stream');
-        api.trigger('peer.stream', [{
-          id: id,
-          stream: evnt.stream
-        }]);
-        if (!$rootScope.$$digest) {
-          $rootScope.$apply();
-        }
+      pc.ondatachannel = function (evnt) {
+        console.log('Received new stream', evnt);
+
+          evnt.channel.onmessage = function(event){
+              console.log('2', event.data, JSON.parse(event.data));
+              api.trigger('peer.stream', [{
+                  id: id,
+                  location: JSON.parse(event.data),
+                  stream: event.stream
+              }]);
+              if (!$rootScope.$$digest) {
+                  $rootScope.$apply();
+              }
+        };
+
       };
+        var sendChannel = pc.createDataChannel("sendDataChannel", {reliable: false});
+        setTimeout(function(){
+            sendChannel.send(JSON.stringify(stream));
+        }, 1000);
+
+//        pc.ondatachannel = function(event) {
+//            receiveChannel = event.channel;
+//            receiveChannel.onmessage = function(event){
+//                document.querySelector("div#receive").innerHTML = event.data;
+//            };
+//        };
+//
+//        sendChannel = pc.createDataChannel("sendDataChannel", {reliable: false});
+//
+//        document.querySelector("button#send").onclick = function (){
+//            var data = document.querySelector("textarea#send").value;
+//            sendChannel.send(data);
+//        };
       return pc;
     }
 
