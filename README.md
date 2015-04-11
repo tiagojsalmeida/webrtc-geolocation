@@ -1,2 +1,2 @@
 # webrtc-geolocation
-Share Location with WebRTC
+Share geo location with WebRTC
